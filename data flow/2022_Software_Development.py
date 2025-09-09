@@ -23,3 +23,17 @@ def read_file (first_names, surnames, categories, passwords):
     return categories
 
 def total_members (categories):
+    search = input("What membership to count? ")
+    counter = 0
+    for x in range(len(categories)):
+        if categories[x].lower() == search.lower():
+            counter = counter + 1
+    print(counter)
+
+
+def valid_password():
+    
+
+globalnames, globalsurnames, globalcategories, globalpasswords = new_member()
+globalcategories = read_file(globalnames, globalsurnames, globalcategories, globalpasswords)
+total_members(globalcategories)
