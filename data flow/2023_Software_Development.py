@@ -47,7 +47,7 @@ def service(attractions, categories, daysOpen):
 def height_restriction(height):
     counter = 0
     for x in range(len(height)):
-        if height[x][0] == "1":
+        if height[x][0] == "   1":
             counter += 1
     print(counter)
     
