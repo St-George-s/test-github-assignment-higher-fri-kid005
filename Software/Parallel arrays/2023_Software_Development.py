@@ -2,7 +2,7 @@ import csv
 
 # opens attractions.csv, adds parallel arrays and returns them.
 def read_file():
-    with open("data flow/attractions.csv", "r") as file:
+    with open("Software/Parallel arrays/attractions.csv", "r") as file:
         attractions = []
         categories = []
         visitors = []
@@ -35,7 +35,7 @@ def mostleast_attract(attractions, visitors):
 # Writes the names of roller coasters that need a service within 7 days.
 def service(attractions, categories, daysOpen):
     # 3.1 Create ‘service.csv’ file
-    with open("data flow/service.csv", "w") as file:
+    with open("Software/Parallel arrays/service.csv", "w") as file:
     # 3.2 Loop for each attraction
         writer = csv.writer(file)
         for x in range(len(categories)):

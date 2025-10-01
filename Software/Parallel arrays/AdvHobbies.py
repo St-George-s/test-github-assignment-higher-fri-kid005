@@ -3,7 +3,7 @@ import csv
 # Function to read CSV file into parallel arrays 
 def readFile():
     # Opens CSV file into read mode
-    with open("data flow/Fun_Users.csv", "r") as file:
+    with open("Software/Parallel arrays/Fun_Users.csv", "r") as file:
         name = [] # 
         hobby = []
         pokemon = []

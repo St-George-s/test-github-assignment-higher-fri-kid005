@@ -8,9 +8,10 @@ def new_member():
     passwords = input("GIVE ME UR PASSWORD: ")
     return first_names, surnames, categories, passwords 
      
+
 # opens members.csv and adds new member data into parallel arrays, returning categories.
 def read_file (first_names, surnames, categories, passwords):
-    with open("data flow/members.csv", "r") as file:   
+    with open("Software/Parallel arrays/members.csv", "r") as file:   
         first_names = [first_names]
         surnames = [surnames]
         categories = [categories]
@@ -32,6 +33,7 @@ def total_members (categories):
         if categories[x].lower() == search.lower():
             counter = counter + 1
     print(counter)
+
 
 # Makes sure the user inputs a valid password and tells them it's invalid if it's wrong.
 def valid_password(passwords):
