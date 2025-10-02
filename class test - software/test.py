@@ -3,16 +3,18 @@ import csv
 
 # reads data from games.csv into parallel arrays.
 def readGameDatafromCSV():
-    with open("class test - software/games.csv", "r") as file:
+    with open("class test - software/gamesExtended.csv", "r") as file:
         gameTitles = []
         genres = []
         ageRatings = []
+        platforms = []
         reader = csv.reader(file)
         for row in reader:
             gameTitles.append(row[0])
             genres.append(row[1])
             ageRatings.append(int(row[2]))
-    return gameTitles, genres, ageRatings
+            platforms.append(row[3])
+    return gameTitles, genres, ageRatings, platforms
 
 
 # counts how many games in a genre are suitable for players under 18 and prints the game title and the number of suitable games. 
@@ -25,7 +27,16 @@ def countSuitableGames(gameTitles, genres, ageRatings, genre_to_check):
     print("Total number of suitable games: " + str(counter)) 
 
 
+# counts how many games that are suitable for players under 18 are available on a platform.
+def countGamesAvailableOnPlatform(gameTitles, genres, ageRatings, platforms):
+    with open("class test - software/platform_suitable_games.txt", "w") as file:
+        platform = input("What platform do you need your game for? ")
+        for x in range(len(gameTitles)):
+            if 
+            
+
+
 # main program
-globalgameTitles, globalgenres, globalageRatings = readGameDatafromCSV()
+globalgameTitles, globalgenres, globalageRatings, globalplatforms = readGameDatafromCSV()
 globalgenre_to_check = input("What genre would you like to check are suitable for players under 18? ")
 countSuitableGames(globalgameTitles, globalgenres, globalageRatings, globalgenre_to_check)
