@@ -28,12 +28,11 @@ def countSuitableGames(gameTitles, genres, ageRatings, genre_to_check):
 
 
 # counts how many games that are suitable for players under 18 are available on a platform.
-def countGamesAvailableOnPlatform(gameTitles, genres, ageRatings, genre_to_check, platforms):
+def countGamesAvailableOnPlatform(gameTitles, genres, ageRatings, genre_to_check, platforms, platform_to_check):
     with open("class test - software/platform_suitable_games.txt", "w") as file:
-        platform = input("What platform do you need your game for? ")
         counter = 0
         for x in range(len(gameTitles)):
-            if genres[x] == genre_to_check and ageRatings[x] < 18:
+            if genres[x] == genre_to_check and ageRatings[x] < 18 and platform_to_check == platforms[x]:
                 file.write(gameTitles[x] + " - " + platforms[x])
                 file.write("\n")
                 counter += 1
@@ -43,5 +42,7 @@ def countGamesAvailableOnPlatform(gameTitles, genres, ageRatings, genre_to_check
 # main program
 globalgameTitles, globalgenres, globalageRatings, globalplatforms = readGameDatafromCSV()
 globalgenre_to_check = input("What genre would you like to check are suitable for players under 18? ")
+globalplatform_to_check = input("What platform do you want? ")
 countSuitableGames(globalgameTitles, globalgenres, globalageRatings, globalgenre_to_check)
-countGamesAvailableOnPlatform(globalgameTitles, globalgenres, globalageRatings, globalgenre_to_check, globalplatforms)
+countGamesAvailableOnPlatform(globalgameTitles, globalgenres, globalageRatings, globalgenre_to_check, globalplatforms, globalplatform_to_check)
+countGamesAvailableOnPlatform(["Pokemon Go", "GTA 6"], ["Action", "Action"], [6, 18], "Action", ["Mobile", "PC"], "Mobile")
