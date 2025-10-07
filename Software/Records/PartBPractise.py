@@ -21,7 +21,6 @@ def readOrders():
              orders.append(newOrder)   
     return orders
 
-
 # Procedure that finds the maximum price spent on a TV purchase.
 def findMaxOrder(orders):
      maxOrder = orders[0]
