@@ -9,6 +9,7 @@ class Sighting():
         self.age = age
 
 
+# reads data from file
 def readDataFromFile():
     sightings = []
     with open("Software/Records/mammals.txt", "r") as file:
@@ -19,5 +20,16 @@ def readDataFromFile():
     return sightings
 
 
+# finds and displays the age of the oldest walker
 def findOldest(sightings):
-    pass
+    max_value = sightings[0]
+
+    for sight in sightings:
+        if int(max_value < sight.age:
+            max_value = sight.age
+    print(max_value)
+
+
+# main program
+globalsightings = readDataFromFile()
+findOldest(globalsightings)
