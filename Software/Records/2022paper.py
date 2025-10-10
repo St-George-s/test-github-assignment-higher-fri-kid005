@@ -29,13 +29,29 @@ def findOldest(sightings):
     print(highest_age)
 
 
+# function that changes lower case first letters to upper case
+def upperString(townOrMammal):
+    firstChar = townOrMammal[0]
+    if firstChar >= "a" and firstChar <= "z":
+        firstChar = firstChar.upper
+    return firstChar + townOrMammal[1:]
+
 # finds and displays dates of sightings of a mammal in a specific town
 def findMammalinTown(sightings):
-    town = input("Enter town pls: ")
-    if sightings[0].town >= 97 and sightings[0].town <= 122:
-        sightings[0].town =
+    town = input("Enter town: ")
+    upperString(globaltownOrMammal)
+    mammal = input("Enter a mammal: ")
+    upperString(globaltownOrMammal)
+    print("The dates of sightings were: ")
+    for x in range(len(sightings)):
+        if sightings
+
+
+
 
 
 # main program
 globalsightings = readDataFromFile()
 findOldest(globalsightings)
+globaltownOrMammal = ""
+upperString(globaltownOrMammal)
