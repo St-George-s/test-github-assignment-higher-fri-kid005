@@ -29,6 +29,12 @@ def findOldest(sightings):
     print(highest_age)
 
 
+# finds and displays dates of sightings of a mammal in a specific town
+def findMammalinTown(sightings):
+    town = input("Enter town pls: ")
+    if sightings[0].town >= 97 and sightings[0].town <= 122:
+        sightings[0].town =
+
 
 # main program
 globalsightings = readDataFromFile()
