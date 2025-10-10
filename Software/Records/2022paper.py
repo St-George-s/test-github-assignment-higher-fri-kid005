@@ -21,15 +21,9 @@ def readDataFromFile():
 
 
 # finds and displays the age of the oldest walker
-def findOldest(sightings):
-    max_value = sightings[0]
-
-    for sight in sightings:
-        if int(max_value < sight.age:
-            max_value = sight.age
-    print(max_value)
+    def findOldest(sightings):
+        pass
 
 
 # main program
 globalsightings = readDataFromFile()
-findOldest(globalsightings)
