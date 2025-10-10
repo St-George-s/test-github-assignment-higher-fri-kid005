@@ -21,9 +21,15 @@ def readDataFromFile():
 
 
 # finds and displays the age of the oldest walker
-    def findOldest(sightings):
-        pass
+def findOldest(sightings):
+    highest_age = sightings[0].age 
+    for index in range(len(sightings)):
+        if highest_age<sightings[index].age:
+            highest_age = sightings[index].age
+    print(highest_age)
+
 
 
 # main program
 globalsightings = readDataFromFile()
+findOldest(globalsightings)
