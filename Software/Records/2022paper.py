@@ -30,26 +30,32 @@ def findOldest(sightings):
 
 
 # function that changes lower case first letters to upper case
-# def upperString(word):
-#     firstChar = word[0]
-#     if ord(firstChar) >= 97 and ord(firstChar) <= 122:
-#         firstChar = firstChar.upper
-#     print(firstChar + word[1:])
-#     return firstChar, word[1:]
+def upperString(word):
+    firstChar = word[0]
+    if ord(firstChar) >= 97 and ord(firstChar) <= 122:
+        firstChar = firstChar.upper
+    print(firstChar + word[1:])
+    return firstChar, word[1:]
 
 
 # finds and displays dates of sightings of a mammal in a specific town
-def displayDates():
+def displayDates(sightings):
 # 3.1    Ask user to enter town 
-    pass
+    town = input("Enter town: ")
 # 3.2    Call a function to return a string input that starts with an upper-case character
-    
+    upperString("")
 # 3.3    Ask user to enter mammal 
+    mammal = input("Enter mammal: ")
 # 3.4    Call a function to return a string input that starts with an upper-case character 
+    upperString("")
 # 3.5    Display “The dates of sightings were:” 
+    print("The dates of the sightings were: ")
 # 3.6    Start loop for each sighting in array of records 
+    for x in range(len(sightings)):
 # 3.7         If sighting matches entered town and mammal then 
-# 3.8      Display date 
+        if sightings[x].town == upperString and sightings[x].mammal == upperString:
+# 3.8      Display date
+            print(sightings[x].date)
     
 
 # counts and displays number of sightings for each date in the text file
@@ -70,6 +76,6 @@ def countSightDates(sightings):
 # main program
 globalsightings = readDataFromFile()
 findOldest(globalsightings)
-# globalWord = input("Enter a town or mammal: ")
-# upperString()
+globalWord = input("Enter a town or mammal: ")
+upperString()
 countSightDates(globalsightings)
