@@ -1,27 +1,12 @@
--- SELECT artist_name 
--- FROM Artists 
--- WHERE artist_name LIKE 'T%';
+-- SELECT * 
+-- FROM Tracks 
+-- WHERE album_id IN (
+--   SELECT album_id 
+--   FROM Albums 
+--   WHERE release_year > 2018
+--  );
 
--- 'T%' starts with letter 'T'
-
--- SELECT album_name, release_year 
--- FROM Albums 
--- WHERE release_year >= 2015 
--- ORDER BY release_year ASC;
-
--- DESC means DESCENDING ORDER!!!
--- ASC means ASCENDING!!!
-
--- SELECT a.album_name AS Album, a.release_year Year 
--- FROM Albums a 
--- WHERE a.release_year > 2010 
--- ORDER BY a.release_year;
-
--- SELECT artist_name, LENGTH(artist_name) AS Name_Length 
--- FROM Artists 
--- WHERE artist_name LIKE '_a%';
-
--- SELECT track_name
--- FROM Tracks
--- WHERE track_name LIKE 'S%E'; 
-
+ SELECT T.track_name, A.album_name 
+ FROM Tracks T, Albums A
+ WHERE T.album_id = A.album_id
+   AND A.release_year > 2020;
