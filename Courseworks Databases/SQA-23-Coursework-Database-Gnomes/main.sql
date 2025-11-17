@@ -7,3 +7,21 @@
 -- ORDER BY SUM(quantity) DESC;
 
 -- QUESTION 2C:
+-- SELECT c.emailAddress, o.orderID, gp.quantity
+-- FROM Customer c 
+-- JOIN Orders o ON o.customerID = c.customerID
+-- JOIN GnomePurchase gp ON gp.orderID = o.orderID
+-- JOIN Gnome g ON g.gnomeID = gp.gnomeID
+-- WHERE g.unitPrice = (
+--     SELECT MAX(unitPrice)
+--     FROM Gnome
+-- )
+-- AND quantity >= 3;
+
+-- QUESTION 2D:
+-- SELECT forename, surname, ROUND(SUM(quantity * unitPrice *1.2),2) AS 'Total to pay £'
+-- FROM Customer, Gnome, GnomePurchase, Orders
+-- WHERE Orders.orderID = "ord0024"
+-- AND Customer.customerID = Orders.customerID
+-- AND Orders.orderID = GnomePurchase.orderID
+-- AND Gnome.gnomeID = GnomePurchase.gnomeID;
