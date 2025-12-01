@@ -21,6 +21,4 @@
 -- SELECT r.routeID, r.woodName, r.description
 -- FROM Route r 
 -- WHERE r.footwear LIKE "%shoe%";
-
-SELECT *
-FROM Route;
+   
