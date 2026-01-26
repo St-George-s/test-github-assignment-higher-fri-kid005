@@ -22,4 +22,4 @@
 -- FROM Shop s 
 -- JOIN event e ON e.shopID = s.shopID
 -- JOIN Booking b ON b.eventID = e.eventID
--- GROUP BY s.name;
+-- GROUP BY s.name;   
