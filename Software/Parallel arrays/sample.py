@@ -22,14 +22,15 @@ def generateBib(entryID, location, forename, surname):
     with open("bibValues.csv", "w") as file:
         for x in range(30):
             bibValue = forename[x][0] + surname[x] + str(ord(location[x][0]))
-            file.write(bibValue + '\n')
-
-
+            file.write(entryID[x] + " " + bibValue + '\n')
 
 
 
 def highestJump(jumps):
-
+    maxJumps = jumps[0]
+    for x in range(1, len(jumps)):
+        if jumps[x] > maxJumps:
+            maxJumps = jumps[x]
     return maxJumps
 
 
@@ -39,6 +40,8 @@ def athleteJump(maxJumps, forename, surname, jumps):
 
 
 
+
 # main program
 globalEntryID, globalLocation, globalForename, globalSurname, globalJumps = getData()
 generateBib(globalEntryID, globalLocation, globalForename, globalSurname)
+highestJump(globalJumps)
