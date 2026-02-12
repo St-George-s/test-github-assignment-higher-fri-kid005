@@ -36,11 +36,12 @@ def writeWinnerToFile(members, furthest):
     with open("results.txt", "w") as file:
         for x in range(len(members)):
             if members[x].distance > (0.7 * furthest):
-                file.write(members[x].forename, members[x].surname)
+                file.write(members[x].forename)
+                file.write(members[x].surname)
 
 
 # main program
 members = readData()
 furthest = furthestDistance(members) 
 displayFurthest(furthest)
-# writeWinnerToFile(members)
+writeWinnerToFile(members, furthest)
