@@ -42,5 +42,5 @@ def writeWinnerToFile(members, furthest):
 # main program
 members = readData()
 furthest = furthestDistance(members) 
-displayFurthest(members)
+displayFurthest(furthest)
 # writeWinnerToFile(members)
