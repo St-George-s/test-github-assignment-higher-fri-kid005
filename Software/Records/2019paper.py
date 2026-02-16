@@ -34,10 +34,18 @@ def displayFurthest(furthest):
 # procedure to write club prize winners to file called results.txt
 def writeWinnerToFile(members, furthest):
     with open("results.txt", "w") as file:
+        file.write("The prize winning members are: " + '\n')
         for x in range(len(members)):
             if members[x].distance > (0.7 * furthest):
-                file.write(members[x].forename)
-                file.write(members[x].surname)
+                file.write(members[x].forename + " ")
+                file.write(members[x].surname + '\n')
+        file.write ("The number of whole marathons walked by each member is: " + '\n')
+        for x in range(len(members)):
+            wholeMarathons = members[x].distance / 26.22
+            file.write(members[x].forename + " ")
+            file.write(members[x].surname + '\n')
+            file.write(str(wholeMarathons) + '\n')
+                   
 
 
 # main program
