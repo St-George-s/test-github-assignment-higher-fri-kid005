@@ -37,7 +37,9 @@ def ratingPosition(orders):
 def winningDetails(orders, position):
     with open("winningCustomer.txt", "w") as file:
         if position >= 0:
-            file.write()
+            file.write(orders[position].orderNum + " ")
+            file.wrtte(orders[position].email + " ")
+            file.write(orders[position].cost)
         else:
             file.write("No winner")
 

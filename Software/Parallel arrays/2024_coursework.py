@@ -37,6 +37,7 @@ def differenceInSalary(company, ceoSalary):
             position = x
     if chosenCompany == company:
         
+        
 
 # find and display highest number of employees employed by a single company + number of companies who employ within 10% of that figure
 def highestNumEmployees(numEmployees):
