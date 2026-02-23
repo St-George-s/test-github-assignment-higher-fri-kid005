@@ -30,12 +30,16 @@ def findMaxPos(ceoSalary):
 def differenceInSalary(company, ceoSalary):
     chosenCompany = input("Enter the name of the chosen company: ")
     found = False
-    findMaxPos(ceoSalary)
+    highestSalaryPosition = findMaxPos(ceoSalary)
     for x in range (len(company)):
         if company[x] == chosenCompany:
             found = True
             position = x
-    if chosenCompany == company:
+    if found == True:
+        difference = ceoSalary[highestSalaryPosition] - ceoSalary[position]
+        print(company[highestSalaryPosition] + chosenCompany + difference)
+    else:
+        print("Company not found")
         
         
 

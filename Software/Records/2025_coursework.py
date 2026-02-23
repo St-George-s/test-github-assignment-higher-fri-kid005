@@ -26,8 +26,8 @@ def ratingPosition(orders):
     position = -1
     index = 0
     month = input("Enter a month to search for: ")
-    while position == -1 and index < len(orders.date):
-        if orders[index].date == month and orders[index].rating == 5:
+    while position == -1 and index < len(orders):
+        if orders[index].date[3:6] == month and orders[index].rating == 5:
             position = index
         index += 1
     return position
@@ -38,19 +38,29 @@ def winningDetails(orders, position):
     with open("winningCustomer.txt", "w") as file:
         if position >= 0:
             file.write(orders[position].orderNum + " ")
-            file.wrtte(orders[position].email + " ")
-            file.write(orders[position].cost)
+            file.write(orders[position].email + " ")
+            file.write(str(orders[position].cost))
         else:
             file.write("No winner")
 
 
+def countOption(orders, status):
+    counter = 0
+    for item in orders:
+        if item.option == status:
+            counter += 1
+    return counter
+
+
+
 # display total number of orders delievered and collected
 def totalOrders(orders):
-    pass
+    count = countOption(orders, "Delivered")
+    count = countOption(orders, "Collected")
 
 
 # main program
-orders = readFromFile
+orders = readFromFile()
 position = ratingPosition(orders)
 winningDetails(orders, position)
 totalOrders(orders)
