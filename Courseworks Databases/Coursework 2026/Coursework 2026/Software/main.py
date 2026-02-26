@@ -20,23 +20,28 @@ def readFromFile():
 
 
 # finds and displays name of each tool and total number of tools by a chosen manufacturer
-def chosenTool(tools, manufacturers):
-    chosenManufacturer = input("What manufacturer would you like to search for?: ")
+def findChosenTools(tools, manufacturers):
     found = False
     counter = 0
-    for x in range(len(manufacturers)):
-        while found == False:
-            if manufacturers[x] == chosenManufacturer:
+    total = 0
+    chosenManufacturer = input("Enter a manufacturer: ")
+    arraySize = len(manufacturers)
+    while counter < arraySize and not found:
+        if manufacturers[counter] == chosenManufacturer:
+            found = True
+            total += 1
+        else:
+            counter += 1
+    if found:
+        print(tools[counter])
+        print("Total: " + str(total))
                 
 
-
-
-
-# calculates late fees
-def lateFee(datesRented, returned, fees):
-    for x in range(len(datesRented)):
-        if datesRented[x][6:10] == "2025" and returned[x] == "No":
-            if 1 < int(datesRented[x][3:5]) < 6:
+# calculates late fees for tools rented in 2025 and not returned
+def calculateLateFee(dateRented, returned, fees):
+    for x in range(len(dateRented)):
+        if dateRented[x][6:10] == "2025" and returned[x] == "No":
+            if 1 < int(dateRented[x][3:5]) < 6:
                 fees[x] += 10
             else:
                 fees[x] += 5
@@ -44,5 +49,15 @@ def lateFee(datesRented, returned, fees):
 
 
 # writes tool name, date rented and fee of any tool with a late fee to lateTools.csv
-def lateTools(tools, datesRented, fees):
-    pass
+def writeLateTools(tools, dateRented, fees):
+    with open("lateTools.csv", "w") as file:
+        for x in range(len(tools)):
+            if fees[x] != 0:
+                file.write(tools[x] + ", " + dateRented[x] + ", " + str(fees[x]) + '\n')
+
+
+# main program
+tools, manufacturers, dateRented, returned, fees = readFromFile()
+findChosenTools(tools, manufacturers)
+# calculateLateFee(dateRented, returned, fees)
+# writeLateTools(tools, dateRented, fees)
