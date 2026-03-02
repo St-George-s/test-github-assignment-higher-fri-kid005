@@ -23,25 +23,23 @@ def readFromFile():
 def findChosenTools(tools, manufacturers):
     found = False
     counter = 0
-    total = 0
     chosenManufacturer = input("Enter a manufacturer: ")
     arraySize = len(manufacturers)
     while counter < arraySize and not found:
         if manufacturers[counter] == chosenManufacturer:
             found = True
-            total += 1
+            print(tools[counter])
         else:
             counter += 1
     if found:
-        print(tools[counter])
-        print("Total: " + str(total))
+        print("Total: " + str(counter))
                 
 
-# calculates late fees for tools rented in 2025 and not returned
+# calculates late fees 
 def calculateLateFee(dateRented, returned, fees):
     for x in range(len(dateRented)):
-        if dateRented[x][6:10] == "2025" and returned[x] == "No":
-            if 1 < int(dateRented[x][3:5]) < 6:
+        if dateRented[x][6:10] == "2025" and returned[x] == "No": # if characters from index 6 to 10 in dateRented are equal to 2025
+            if 1 < int(dateRented[x][3:5]) < 6: # if characters from index 3 to 5 in dateRented is bigger than 1 and smaller than 6
                 fees[x] += 10
             else:
                 fees[x] += 5
@@ -59,5 +57,5 @@ def writeLateTools(tools, dateRented, fees):
 # main program
 tools, manufacturers, dateRented, returned, fees = readFromFile()
 findChosenTools(tools, manufacturers)
-# calculateLateFee(dateRented, returned, fees)
-# writeLateTools(tools, dateRented, fees)
+calculateLateFee(dateRented, returned, fees)
+writeLateTools(tools, dateRented, fees)
