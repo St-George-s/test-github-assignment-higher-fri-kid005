@@ -1,0 +1,48 @@
+The prize winning members are: 
+Teressa Jones
+Ross Durrant
+Ian Hunter
+James Kerr
+Tisa Sullivan
+Albert Nvodo
+The number of whole marathons walked by each member is: 
+Nikolai Bryant
+5.55301296720061
+Susan Brown
+1.3043478260869568
+Teressa Jones
+15.198321891685737
+Martin Daly
+9.797864225781845
+Ross Durrant
+15.598779557589626
+Greg Watson
+3.7833714721586578
+Wendy Russell
+3.3333333333333335
+Pamela Adkins
+2.807017543859649
+Ian Hunter
+14.710144927536232
+James Kerr
+19.267734553775743
+Lesley Wallace
+2.6086956521739135
+Kim Pettigrew
+9.778794813119756
+Steven Johnstone
+0.8924485125858124
+Ali Hussain
+0.4614797864225782
+Hasan Abbas
+11.517925247902365
+Jacek Nowak
+7.6239511823035855
+Mirka Kowalski
+6.742944317315027
+Rudo Hyper
+4.584286803966438
+Tisa Sullivan
+18.466819221967963
+Albert Nvodo
+14.71395881006865
