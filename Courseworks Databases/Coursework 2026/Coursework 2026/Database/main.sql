@@ -1,28 +1,31 @@
 -- Question 2c
-SELECT c.forename, c.surname
-FROM Customer c 
-JOIN Purchase p ON c.customerID = p.customerID
-JOIN Movie m ON p.movieCode = m.movieCode
-WHERE m.duration = (
+SELECT forename, surname
+FROM Customer  
+JOIN Purchase ON Customer.customerID = Purchase.customerID
+JOIN Movie ON Purchase.movieCode = Movie.movieCode
+WHERE duration = (
     SELECT MIN(duration)
-    FROM Movie m
+    FROM Movie 
 );
 
 
 -- Question 2d
-SELECT c.forename, c.surname, SUM(m.price) AS "Total spent(£)"
-FROM Customer c 
-JOIN Purchase p ON c.customerID = p.customerID
-JOIN Movie m ON p.movieCode = m.movieCode
-JOIN Genre g ON m.genreID = m.genreID
-WHERE g.genreName = 'Comedy'
-GROUP BY c.customerID
-ORDER BY SUM(m.price) DESC;
+SELECT forename, surname, SUM(price) AS "Total spent(£)"
+FROM Customer  
+JOIN Purchase ON Customer.customerID = Purchase.customerID
+JOIN Movie ON Purchase.movieCode = Movie.movieCode
+JOIN Genre ON Movie.genreID = Genre.genreID
+WHERE genreName = 'Comedy'
+GROUP BY Customer.customerID
+ORDER BY SUM(price) DESC;
 
 
 -- Question 2e
--- SELECT forename, surname, email
--- FROM customer, purchase, movie
--- WHERE customer.customerID = purchase.customerID
--- AND movie.movieCode = purchase.movieCode
--- AND released = 1990;
+SELECT forename, surname, email
+FROM customer, purchase, movie
+WHERE customer.customerID = purchase.customerID
+AND movie.movieCode = purchase.movieCode
+AND released >= 1990
+AND released<=1999
+GROUP BY customer.customerID
+ORDER BY forename;
