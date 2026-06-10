@@ -1,111 +1,79 @@
-#!/usr/bin/env bash
-set -euo pipefail
+ 
 
-log() { echo "[init-db] $*"; }
-need() { command -v "$1" >/dev/null 2>&1 || { echo "[init-db] Missing: $1" >&2; exit 1; }; }
+#!/usr/bin/env bash 
 
-# --- macOS (Homebrew) MariaDB init script ---
-# - Installs MariaDB via Homebrew
-# - Starts mariadbd manually with --no-defaults (ignores my.cnf)
-# - Initialises datadir if needed
-# - Creates DB 'school' and user 'student' (password: studentpw)
-# - Optionally seeds from /tmp/seed.sql
+set -euo pipefail 
 
-need brew
+echo "[init-db] Installing MariaDB…" 
 
-log "Installing MariaDB (if needed)…"
-brew install mariadb >/dev/null 2>&1 || true
+sudo apt-get update -y 
 
-need mariadbd
-need mariadb-install-db
-need mysqladmin
-need mariadb
+sudo apt-get install -y mariadb-server mariadb-client 
 
-DATA_DIR="$(brew --prefix)/var/mysql"
-LOG_FILE="/tmp/mariadb.log"
-PID_FILE="/tmp/mariadb.pid"
-SOCK_FILE="/tmp/mariadb.sock"
-HOST="127.0.0.1"
-PORT="3306"
+echo "[init-db] Preparing data dirs…" 
 
-# Optional root password (set this in your shell before running if you want root provisioning)
-# export MARIADB_ROOT_PASSWORD="rootpw"
-ROOT_PW="${MARIADB_ROOT_PASSWORD:-}"
+sudo mkdir -p /var/run/mysqld 
 
-log "Preparing data dir…"
-mkdir -p "$DATA_DIR"
+sudo chown -R mysql:mysql /var/run/mysqld /var/lib/mysql 
 
-# Initialise if system tables missing
-if [[ ! -d "$DATA_DIR/mysql" ]]; then
-  log "Initialising data directory at $DATA_DIR…"
-  rm -rf "$DATA_DIR"/* 2>/dev/null || true
-  mariadb-install-db --datadir="$DATA_DIR" >/dev/null
-fi
+# Initialise if needed (idempotent) 
 
-log "Stopping any previous MariaDB processes…"
-pkill -f mariadbd 2>/dev/null || true
-pkill -f mysqld 2>/dev/null || true
+sudo mysqld --initialize-insecure --user=mysql --datadir=/var/lib/mysql || true 
 
-log "Starting MariaDB (manual, ignoring config files)…"
-nohup mariadbd \
-  --no-defaults \
-  --datadir="$DATA_DIR" \
-  --bind-address="$HOST" \
-  --port="$PORT" \
-  --socket="$SOCK_FILE" \
-  --pid-file="$PID_FILE" \
-  --log-error="$LOG_FILE" \
-  >/dev/null 2>&1 &
+echo "[init-db] Starting mysqld…" 
 
-log -n "Waiting for MariaDB"
-READY="false"
-for _ in {1..60}; do
-  if mysqladmin --no-defaults --protocol=TCP -h "$HOST" -P "$PORT" -u root ping --silent >/dev/null 2>&1; then
-    READY="true"
-    echo " ✓"
-    break
-  fi
-  echo -n "."
-  sleep 1
-done
+sudo nohup mysqld --user=mysql --datadir=/var/lib/mysql --bind-address=0.0.0.0 >/tmp/mysqld.log 2>&1 & 
 
-if [[ "$READY" != "true" ]]; then
-  echo
-  echo "[init-db] MariaDB did not become ready. Tail of log:" >&2
-  tail -n 200 "$LOG_FILE" >&2 || true
-  exit 1
-fi
+# Wait for server 
 
-# If root password is set, use it. Otherwise attempt root passwordless.
-ROOT_AUTH_ARGS=(--no-defaults --protocol=TCP -h "$HOST" -P "$PORT" -u root)
-if [[ -n "$ROOT_PW" ]]; then
-  ROOT_AUTH_ARGS+=("-p$ROOT_PW")
-fi
+echo -n "[init-db] Waiting for MariaDB" 
 
-log "Creating DB and accounts…"
-mariadb "${ROOT_AUTH_ARGS[@]}" <<'SQL'
-CREATE DATABASE IF NOT EXISTS school;
+for i in {1..60}; do 
 
-CREATE USER IF NOT EXISTS 'student'@'localhost' IDENTIFIED BY 'studentpw';
-CREATE USER IF NOT EXISTS 'student'@'127.0.0.1' IDENTIFIED BY 'studentpw';
-CREATE USER IF NOT EXISTS 'student'@'%' IDENTIFIED BY 'studentpw';
+  if mysqladmin ping -h 127.0.0.1 --silent; then echo " ✓"; break; fi 
 
-ALTER USER 'student'@'localhost' IDENTIFIED BY 'studentpw';
-ALTER USER 'student'@'127.0.0.1' IDENTIFIED BY 'studentpw';
-ALTER USER 'student'@'%' IDENTIFIED BY 'studentpw';
+  echo -n "."; sleep 1 
 
-GRANT ALL PRIVILEGES ON *.* TO 'student'@'localhost';
-GRANT ALL PRIVILEGES ON *.* TO 'student'@'127.0.0.1';
-GRANT ALL PRIVILEGES ON *.* TO 'student'@'%';
-FLUSH PRIVILEGES;
-SQL
+done 
 
-# Optional seed
-if [[ -f /tmp/seed.sql ]]; then
-  log "Seeding school from /tmp/seed.sql…"
-  mariadb --no-defaults --protocol=TCP -h "$HOST" -P "$PORT" -ustudent -pstudentpw school < /tmp/seed.sql || true
-fi
+echo "[init-db] Create default DB and accounts…" 
 
-log "Done."
-log "Connect as student:"
-log "  mariadb --no-defaults --protocol=TCP -h $HOST -P $PORT -ustudent -pstudentpw school"
+# Use socket as root to avoid TCP auth assumptions 
+
+sudo mysql <<'SQL' 
+
+CREATE DATABASE IF NOT EXISTS school; 
+
+-- Ensure student exists on all relevant hosts, force password plugin 
+
+CREATE USER IF NOT EXISTS 'student'@'localhost' IDENTIFIED BY 'studentpw'; 
+
+CREATE USER IF NOT EXISTS 'student'@'127.0.0.1' IDENTIFIED BY 'studentpw'; 
+
+CREATE USER IF NOT EXISTS 'student'@'%' IDENTIFIED BY 'studentpw'; 
+
+ALTER USER 'student'@'localhost' IDENTIFIED BY 'studentpw'; 
+
+ALTER USER 'student'@'127.0.0.1' IDENTIFIED BY 'studentpw'; 
+
+ALTER USER 'student'@'%' IDENTIFIED BY 'studentpw'; 
+
+GRANT ALL PRIVILEGES ON *.* TO 'student'@'localhost'; 
+
+GRANT ALL PRIVILEGES ON *.* TO 'student'@'127.0.0.1'; 
+
+GRANT ALL PRIVILEGES ON *.* TO 'student'@'%'; 
+
+FLUSH PRIVILEGES; 
+
+SQL 
+
+# Optional: seed 'school' (create the file then load) 
+
+if [[ -f /tmp/seed.sql ]]; then 
+
+  mysql --protocol=TCP -h 127.0.0.1 -ustudent -pstudentpw school < /tmp/seed.sql || true 
+
+fi 
+
+echo "[init-db] Done." 
