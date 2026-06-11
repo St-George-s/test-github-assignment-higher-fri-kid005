@@ -7,7 +7,7 @@ class Pet:
 
     
     def showPet(self):
-        print("Name: " + self.name + " Type: " + self.animal_type + " Age: " + self.age + " Hunger " + self.hunger)
+        print("Name: " + self.name + " Type: " + self.animal_type + " Age: " + str(self.age) + " Hunger " + str(self.hunger))
     
 
     def feed(self):
